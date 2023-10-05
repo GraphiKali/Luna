@@ -1,0 +1,128 @@
+public class Car {
+    private int id;
+    private int powerSource;
+    private float pricePerDay;
+
+    public Car(int id, int powerSource, float pricePerDay) {
+        this.id = id;
+        this.powerSource = powerSource;
+        this.pricePerDay = pricePerDay;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getPowerSource() {
+        return powerSource;
+    }
+
+    public void setPowerSource(int powerSource) {
+        this.powerSource = powerSource;
+    }
+
+    public float getPricePerDay() {
+        return pricePerDay;
+    }
+
+    public void setPricePerDay(float pricePerDay) {
+        this.pricePerDay = pricePerDay;
+    }
+}import java.util.ArrayList;
+import java.util.List;
+
+public class CarFleet {
+    private Queue<Car> gasolineCars = new Queue<>();
+    private Queue<Car> hybridCars = new Queue<>();
+    private Queue<Car> electricCars = new Queue<>();
+
+    public boolean addCar(Car car) {
+        if (car.getPowerSource() == 1) {
+            gasolineCars.enqueue(car);
+            return true;
+        } else if (car.getPowerSource() == 2) {
+            hybridCars.enqueue(car);
+            return true;
+        } else if (car.getPowerSource() == 3) {
+            electricCars.enqueue(car);
+            return true;
+        }
+        return false;
+    }
+
+    public List<Car> processRequests(Queue<Integer> requests) {
+        List<Car> processedCars = new ArrayList<>();
+        while (!requests.isEmpty()) {
+            int request = requests.dequeue();
+
+            if (request == 1) {
+                processedCars.add(gasolineCars.isEmpty() ? new Car(0, 1, 0) : gasolineCars.dequeue());
+            } else if (request == 2) {
+                processedCars.add(hybridCars.isEmpty() ? new Car(0, 2, 0) : hybridCars.dequeue());
+            } else if (request == 3) {
+                processedCars.add(electricCars.isEmpty() ? new Car(0, 3, 0) : electricCars.dequeue());
+            }
+        }
+        return processedCars;
+    }
+}import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class QueueTests {
+
+    @Test
+    public void testQueue() {
+        Queue<Integer> queue = new Queue<>();
+
+        assertTrue(queue.isEmpty());
+        assertNull(queue.peek());
+
+        queue.enqueue(1);
+        queue.enqueue(2);
+        queue.enqueue(3);
+
+        assertFalse(queue.isEmpty());
+        assertEquals(Integer.valueOf(1), queue.peek());
+
+        assertEquals(Integer.valueOf(1), queue.dequeue());
+        assertEquals(Integer.valueOf(2), queue.peek());
+
+        assertEquals(Integer.valueOf(2), queue.dequeue());
+        assertEquals(Integer.valueOf(3), queue.peek());
+
+        assertEquals(Integer.valueOf(3), queue.dequeue());
+        assertTrue(queue.isEmpty());
+        assertNull(queue.peek());
+    }
+
+}import java.util.ArrayList;
+
+public class Queue<E> {
+    private ArrayList<E> list = new ArrayList<>();
+
+    public void enqueue(E e) {
+        list.add(e);
+    }
+
+    public E dequeue() {
+        if (isEmpty()) {
+            return null;
+        }
+        return list.remove(0);
+    }
+
+    public boolean isEmpty() {
+        return list.isEmpty();
+    }
+
+    public E peek() {
+        if (isEmpty()) {
+            return null;
+        }
+        return list.get(0);
+    }
+}
