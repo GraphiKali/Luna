@@ -1,6 +1,5 @@
 import os
 import subprocess
-import googlesearch
 import networking
 import utilities
 
@@ -67,13 +66,13 @@ class CommandHandler:
                 return "Write successful"
             except:
                 return "Write unsuccessful"
-        elif cmd_type == "search":
-            results = googlesearch.search(cmd, num_results=10)
-            to_return = ""
-            for i in results:
-                if i not in to_return:
-                    to_return += i + "\n"
-            return to_return
+        # elif cmd_type == "search":
+        #    results = googlesearch.search(cmd, num_results=10)
+        #    to_return = ""                                        # Removed due to excessive usage cost
+        #    for i in results:
+        #        if i not in to_return:
+        #            to_return += i + "\n"
+        #    return to_return
 
         elif cmd_type == "scrape":
             results = networking.scrape_text(cmd)

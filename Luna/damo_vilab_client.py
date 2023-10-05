@@ -6,7 +6,7 @@ from utilities import uniquify
 
 def request_video(video_name):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect(('100.95.144.137', 8081))
+    client_socket.connect(('your host here', 8081))
 
     message = f"damo-vilab$r:{video_name}".encode('utf-8')
     client_socket.send(message)

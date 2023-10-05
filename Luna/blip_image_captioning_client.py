@@ -6,7 +6,7 @@ import time
 
 def request_image(img_path):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect(('100.95.144.137', 8082))
+    client_socket.connect(('your host here', 8082))
     
     with open(img_path, "rb") as file:
         file_size = os.path.getsize(img_path)
